@@ -92,13 +92,13 @@ app.post('/api/v1/blog', async (c) => {
 
 
 	const body = await c.req.json();
-	const post = await prisma.post.create({
-		data: {
-			title: body.title,
+  const post = await prisma.post.create({
+    data:{ 
+      title: body.title,
 			content: body.content,
 			authorId: userId
-		}
-	});
+    }
+    })
 	return c.json({
 		id: post.id
 	});
