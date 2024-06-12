@@ -1,6 +1,12 @@
 name = "backendhono"
 compatibility_date = "2023-12-01"
 
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMGI3OGEwYmMtMzIxZC00NGJlLTg2YzQtMzE4NzQ5NjE0YTcwIiwidGVuYW50X2lkIjoiMGNmMWJmYzgwMGZkMjI4NmY4YjRiMDI1ZmEzMGU1OWJhZTc2NTAyZWNkNmMzMjc3MzRiOWQ3N2EyMjM4MjJjNCIsImludGVybmFsX3NlY3JldCI6IjY5ZDZiYjdkLWY1MjYtNDY3Yy1iNTdmLWYwMWNhMjJlY2FiYiJ9._9HbeLRYOtcy1jzNjq_IIcb8Yt4KgZoqUoOXeO-4QQU"
+
+
+
+
 # [vars]
 # MY_VAR = "my-variable"
 
@@ -19,12 +25,3 @@ compatibility_date = "2023-12-01"
 
 # [ai]
 # binding = "AI"
-
-
-
-
-
-
-
-[vars]
-DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiYzZhODlkNGUtNTcxMS00MzUwLTg5ZDYtNTkwOGZkM2E0NTQ3IiwidGVuYW50X2lkIjoiMGNmMWJmYzgwMGZkMjI4NmY4YjRiMDI1ZmEzMGU1OWJhZTc2NTAyZWNkNmMzMjc3MzRiOWQ3N2EyMjM4MjJjNCIsImludGVybmFsX3NlY3JldCI6IjY5ZDZiYjdkLWY1MjYtNDY3Yy1iNTdmLWYwMWNhMjJlY2FiYiJ9.atG4QjL9rYnq6EMDvlla28KC-U_qSmW0bcRJisWE6XY"
