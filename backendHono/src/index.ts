@@ -1,18 +1,24 @@
-import { Hono } from 'hono'
-import prisma from "./../db"
+import { Env, Hono } from 'hono'
+// import prisma from "./../db"
+
+import { PrismaClient } from '@prisma/client/edge'
+import { withAccelerate } from '@prisma/extension-accelerate'
+
+const prisma = new PrismaClient().$extends(withAccelerate())
+
 
 
 import { sign,verify } from 'hono/jwt'
 
 
-
-// Create the main Hono app
 const app = new Hono<{
-	Bindings: {
-		DATABASE_URL: string,
-		JWT_SECRET: string,
-	}
+    Bindings: {
+        DATABASE_URL: string,
+        JWT_SECRET: string
+    }
 }>();
+
+
 app.post('/api/v1/user/signup',async (c) => {
 const body = await c.req.json ()
 try {
@@ -26,7 +32,7 @@ try {
     return c.json ({jwtToken:jwt})
 }catch (e){
   c.status(403)
-  return c.json({error:"not able to sign up"})
+  return c.json({error:"not able to sign up", err:e})
 }
 
 })
@@ -44,10 +50,6 @@ email: body.email
   }
   return c.text('signinRoute')
 })
-
-
-
-
 
 
 
