@@ -4,7 +4,6 @@ import { Env, Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
-const prisma = new PrismaClient().$extends(withAccelerate())
 
 
 
@@ -18,25 +17,30 @@ const app = new Hono<{
     }
 }>();
 
-
-app.post('/api/v1/user/signup',async (c) => {
-const body = await c.req.json ()
-try {
-  const user = await prisma.user.create({
-    data:{
-      email:body.email,
-      password:body.password
-    }
-    })
-    const jwt = await sign({id:user.id},c.env.JWT_SECRET)
-    return c.json ({jwtToken:jwt})
-}catch (e){
-  c.status(403)
-  return c.json({error:"not able to sign up", err:e})
-}
-
+app.post('/api/v1/signup', async (c) => {
+	const prisma = new PrismaClient({
+		datasourceUrl: c.env?.DATABASE_URL,
+	}).$extends(withAccelerate());
+	const body = await c.req.json();
+	try {
+		const user = await prisma.user.create({
+			data: {
+				email: body.email,
+				password: body.password
+			}
+		});
+	
+		return c.text('jwt here')
+	} catch(e) {
+		return c.status(403);
+	}
 })
+
+
 app.post('/api/v1/user/signin', async(c) => {
+	const prisma = new PrismaClient({
+		datasourceUrl: c.env?.DATABASE_URL,
+	}).$extends(withAccelerate());
   const body = await c.req.json()
   const user = await prisma.user.findUnique({
     where:{
@@ -69,6 +73,13 @@ app.use('/message/*', async (c, next) => {
   await next()
 })
 app.use('/api/v1/blog/*', async (c, next) => {
+	
+	
+	const prisma = new PrismaClient({
+	datasourceUrl: c.env?.DATABASE_URL,
+}).$extends(withAccelerate());
+
+
 	const jwt = c.req.header('Authorization');
 	if (!jwt) {
 		c.status(401);
@@ -90,6 +101,8 @@ app.use('/api/v1/blog/*', async (c, next) => {
 
 
 app.post('/api/v1/blog', async (c) => {
+
+	
   const userId = c.req.header('userID');
 
 
