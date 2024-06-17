@@ -3,7 +3,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
 
-export const bookRouter = new Hono<{
+export const blogRouter = new Hono<{
     Bindings: {
         DATABASE_URL: string;
         JWT_SECRET: string;
@@ -13,7 +13,7 @@ export const bookRouter = new Hono<{
     }
 }>();
 
-bookRouter.use(async (c, next) => {
+blogRouter.use(async (c, next) => {
     const jwt = c.req.header('Authorization');
 	if (!jwt) {
 		c.status(401);
@@ -29,7 +29,7 @@ bookRouter.use(async (c, next) => {
 	await next()
 });
 
-bookRouter.post('/', async (c) => {
+blogRouter.post('/', async (c) => {
 	const userId = c.get('userId');
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env?.DATABASE_URL	,
@@ -48,7 +48,7 @@ bookRouter.post('/', async (c) => {
 	});
 })
 
-bookRouter.put('/', async (c) => {
+blogRouter.put('/', async (c) => {
 	const userId = c.get('userId');
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env?.DATABASE_URL	,
@@ -69,7 +69,7 @@ bookRouter.put('/', async (c) => {
 	return c.text('updated post');
 });
 
-bookRouter.get('/:id', async (c) => {
+blogRouter.get('/:id', async (c) => {
 	const id = c.req.param('id');
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env?.DATABASE_URL	,
